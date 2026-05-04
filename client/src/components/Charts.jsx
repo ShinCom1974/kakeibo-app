@@ -1,18 +1,9 @@
 import { useRef, useEffect } from 'react';
-import {
-  Chart,
-  ArcElement,
-  BarElement,
-  CategoryScale,
-  LinearScale,
-  Tooltip,
-  Legend,
-  Title,
-} from 'chart.js';
+import { Chart, registerables } from 'chart.js';
 import { getCategoryColor } from '../utils/categories';
 
-// 使用する Chart.js 要素を登録（ツリーシェイキング対応）
-Chart.register(ArcElement, BarElement, CategoryScale, LinearScale, Tooltip, Legend, Title);
+// 全コンポーネントを一括登録（PieController・BarController など必須コントローラーを含む）
+Chart.register(...registerables);
 
 // 現在月から count ヶ月分の YYYY-MM 文字列配列を生成
 function getPastMonths(count) {
@@ -46,8 +37,8 @@ function Charts({ receipts, selectedMonth }) {
     const pieData   = Object.values(catTotals);
     const pieColors = pieLabels.map((l) => getCategoryColor(l));
 
-    // 既存グラフを破棄してから再描画
-    if (pieChart.current) pieChart.current.destroy();
+    // 既存グラフを破棄してから再描画（destroy 後に null 化して二重 destroy を防ぐ）
+    if (pieChart.current) { pieChart.current.destroy(); pieChart.current = null; }
     if (pieRef.current && pieLabels.length > 0) {
       pieChart.current = new Chart(pieRef.current, {
         type: 'pie',
@@ -88,7 +79,7 @@ function Charts({ receipts, selectedMonth }) {
         .reduce((sum, item) => sum + item.price, 0)
     );
 
-    if (barChart.current) barChart.current.destroy();
+    if (barChart.current) { barChart.current.destroy(); barChart.current = null; }
     if (barRef.current) {
       barChart.current = new Chart(barRef.current, {
         type: 'bar',
@@ -129,10 +120,10 @@ function Charts({ receipts, selectedMonth }) {
       });
     }
 
-    // アンマウント時にグラフを破棄してメモリリークを防ぐ
+    // アンマウント時にグラフを破棄してメモリリークを防ぐ（null 化して再利用時の衝突を回避）
     return () => {
-      if (pieChart.current) pieChart.current.destroy();
-      if (barChart.current) barChart.current.destroy();
+      if (pieChart.current) { pieChart.current.destroy(); pieChart.current = null; }
+      if (barChart.current) { barChart.current.destroy(); barChart.current = null; }
     };
   }, [receipts, selectedMonth]);
 
