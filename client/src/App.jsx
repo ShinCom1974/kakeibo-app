@@ -91,7 +91,7 @@ function App() {
 
       <main className="app-main">
         {activeTab === 'upload' && (
-          <ReceiptUpload onReceiptAdded={addReceipt} />
+          <ReceiptUpload onReceiptAdded={addReceipt} receipts={receipts} />
         )}
         {activeTab === 'list' && (
           <ExpenseList receipts={filteredReceipts} onDelete={deleteReceipt} />

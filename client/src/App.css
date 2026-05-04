@@ -450,3 +450,51 @@ body {
   .month-total { display: none; }
   .extracted-meta { gap: 12px; }
 }
+
+/* ============= 検証警告 ============= */
+/* 負の金額警告: 保存はできるが内容確認を促す */
+.warning-msg {
+  background: #fffbeb;
+  border: 1px solid #fcd34d;
+  border-left: 4px solid #f59e0b;
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: .875rem;
+  color: #92400e;
+  margin-bottom: 12px;
+}
+.warning-msg strong { display: block; margin-bottom: 4px; }
+.warning-msg p { margin-bottom: 4px; }
+.warning-list {
+  margin: 6px 0 0 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* 負の金額の行・セルを強調 */
+.row-negative { background: #fff7ed; }
+.price-negative { color: var(--danger); font-weight: 700; }
+
+/* 重複確認バナー: テーブルとアクションボタンの間に挿入 */
+.duplicate-confirm {
+  background: #fef2f2;
+  border: 1px solid #fca5a5;
+  border-left: 4px solid var(--danger);
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+  font-size: .875rem;
+  color: #7f1d1d;
+}
+.duplicate-confirm p { line-height: 1.6; margin-bottom: 12px; }
+
+/* 危険操作ボタン（重複強制保存など） */
+.btn-danger {
+  background: var(--danger);
+  color: white;
+}
+.btn-danger:hover:not(:disabled) {
+  background: #dc2626;
+  transform: translateY(-1px);
+}
