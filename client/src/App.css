@@ -1,0 +1,452 @@
+/* ============= リセット & CSS 変数 ============= */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --primary:       #4f46e5;
+  --primary-dark:  #3730a3;
+  --primary-light: #818cf8;
+  --success:       #22c55e;
+  --danger:        #ef4444;
+  --bg:            #f1f5f9;
+  --card:          #ffffff;
+  --text:          #1e293b;
+  --text-muted:    #64748b;
+  --border:        #e2e8f0;
+  --radius:        12px;
+  --shadow:        0 1px 3px rgba(0,0,0,.08);
+  --shadow-md:     0 4px 6px -1px rgba(0,0,0,.10), 0 2px 4px -1px rgba(0,0,0,.06);
+}
+
+body {
+  font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', 'Yu Gothic', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ============= ヘッダー ============= */
+.app-header {
+  background: linear-gradient(135deg, var(--primary) 0%, #7c3aed 100%);
+  color: white;
+  padding: 24px 20px;
+  text-align: center;
+}
+.app-header h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -.02em;
+}
+.app-header p {
+  margin-top: 4px;
+  opacity: .85;
+  font-size: .9rem;
+}
+
+/* ============= 月選択バー ============= */
+.month-bar {
+  background: white;
+  border-bottom: 1px solid var(--border);
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.month-bar label {
+  font-size: .85rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+.month-bar input[type="month"] {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: .9rem;
+  color: var(--text);
+  cursor: pointer;
+  outline: none;
+  font-family: inherit;
+}
+.month-bar input[type="month"]:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(79,70,229,.1);
+}
+.month-summary {
+  margin-left: auto;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+.month-count {
+  font-size: .85rem;
+  color: var(--text-muted);
+}
+.month-total {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--primary);
+}
+
+/* ============= タブナビゲーション ============= */
+.app-nav {
+  display: flex;
+  background: white;
+  border-bottom: 1px solid var(--border);
+  padding: 0 16px;
+}
+.app-nav button {
+  background: none;
+  border: none;
+  padding: 14px 20px;
+  font-size: .9rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all .2s;
+  font-family: inherit;
+}
+.app-nav button:hover { color: var(--primary); }
+.app-nav button.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+  font-weight: 600;
+}
+
+/* ============= メインコンテンツ ============= */
+.app-main {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+/* ============= ボタン共通 ============= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: .9rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all .2s;
+  font-family: inherit;
+}
+.btn:disabled { opacity: .6; cursor: not-allowed; }
+.btn-primary { background: var(--primary); color: white; }
+.btn-primary:hover:not(:disabled) {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+.btn-success { background: var(--success); color: white; }
+.btn-success:hover:not(:disabled) { background: #16a34a; transform: translateY(-1px); }
+.btn-outline {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+.btn-outline:hover:not(:disabled) { background: var(--bg); }
+.btn-lg {
+  width: 100%;
+  justify-content: center;
+  padding: 14px 20px;
+  font-size: 1rem;
+  margin-top: 12px;
+}
+
+/* ============= アップロードエリア ============= */
+.upload-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.drop-zone {
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  background: white;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all .2s;
+  overflow: hidden;
+}
+.drop-zone:hover, .drop-zone.dragging {
+  border-color: var(--primary);
+  background: rgba(79,70,229,.03);
+}
+.drop-zone.has-file {
+  cursor: default;
+  border-style: solid;
+  border-color: var(--border);
+}
+.drop-hint {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 40px;
+}
+.drop-icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 12px;
+}
+.drop-hint p {
+  font-size: .95rem;
+  line-height: 1.7;
+  margin-bottom: 8px;
+}
+.drop-sub { font-size: .8rem; opacity: .7; }
+.preview-wrapper { position: relative; width: 100%; }
+.preview-image {
+  width: 100%;
+  max-height: 320px;
+  object-fit: contain;
+  display: block;
+}
+.remove-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0,0,0,.5);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  font-size: .8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .2s;
+}
+.remove-btn:hover { background: rgba(0,0,0,.7); }
+
+/* ============= エラー ============= */
+.error-msg {
+  background: #fee2e2;
+  color: #dc2626;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: .9rem;
+}
+
+/* ============= ローディングスピナー ============= */
+.spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255,255,255,.4);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ============= 抽出結果カード ============= */
+.extracted-card {
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  padding: 20px;
+}
+.extracted-card h3 {
+  font-size: 1rem;
+  margin-bottom: 16px;
+}
+.extracted-meta {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.meta-item { display: flex; flex-direction: column; gap: 2px; }
+.meta-label { font-size: .75rem; color: var(--text-muted); }
+.meta-value { font-size: .95rem; font-weight: 600; }
+.total-value { color: var(--primary); font-size: 1.1rem; }
+.items-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 16px;
+  font-size: .875rem;
+}
+.items-table th {
+  text-align: left;
+  padding: 8px 10px;
+  background: var(--bg);
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: .8rem;
+}
+.items-table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+}
+.items-table tr:last-child td { border-bottom: none; }
+.category-badge {
+  background: var(--bg);
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: .8rem;
+  white-space: nowrap;
+}
+.price-cell {
+  text-align: right;
+  font-weight: 600;
+}
+.action-btns {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+/* ============= 保存完了 ============= */
+.success-card {
+  background: white;
+  border-radius: var(--radius);
+  padding: 40px 20px;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+.success-icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 12px;
+}
+.success-card p {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--success);
+  margin-bottom: 20px;
+}
+
+/* ============= 支出一覧 ============= */
+.expense-list { display: flex; flex-direction: column; gap: 12px; }
+.receipt-card {
+  background: white;
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--shadow);
+}
+.receipt-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+.store-name { font-size: 1rem; font-weight: 600; }
+.receipt-date {
+  font-size: .8rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+  display: block;
+}
+.receipt-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.receipt-total {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+.delete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  opacity: .4;
+  transition: opacity .2s;
+  padding: 2px;
+}
+.delete-btn:hover { opacity: 1; }
+.items-grid { display: flex; flex-wrap: wrap; gap: 6px; }
+.item-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg);
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: .8rem;
+}
+.item-category-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.item-price { color: var(--text-muted); font-weight: 600; }
+
+/* ============= カテゴリサマリー ============= */
+.category-summary { margin-bottom: 24px; }
+.category-summary h2 {
+  font-size: 1rem;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+  gap: 10px;
+}
+.category-card {
+  background: white;
+  border-radius: var(--radius);
+  padding: 14px;
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+.cat-icon { font-size: 1.75rem; margin-bottom: 6px; }
+.cat-name { font-size: .8rem; color: var(--text-muted); margin-bottom: 4px; }
+.cat-amount { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+.cat-bar-wrap {
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  margin-bottom: 4px;
+  overflow: hidden;
+}
+.cat-bar { height: 100%; border-radius: 2px; transition: width .5s ease; }
+.cat-pct { font-size: .75rem; color: var(--text-muted); }
+
+/* ============= グラフ ============= */
+.charts-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.chart-card {
+  background: white;
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--shadow);
+}
+
+/* ============= 空状態 ============= */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-muted);
+}
+.empty-state span { font-size: 3rem; display: block; margin-bottom: 12px; }
+.empty-state p { font-size: 1rem; margin-bottom: 6px; }
+.empty-sub { font-size: .85rem; opacity: .7; }
+
+/* ============= レスポンシブ ============= */
+@media (max-width: 600px) {
+  .charts-container { grid-template-columns: 1fr; }
+  .category-grid { grid-template-columns: repeat(2, 1fr); }
+  .app-nav button { padding: 12px 12px; font-size: .8rem; }
+  .month-total { display: none; }
+  .extracted-meta { gap: 12px; }
+}
